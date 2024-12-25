@@ -1,6 +1,7 @@
 package com.AppTransporte.AppTransportePublico.Dto;
 
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -32,4 +33,7 @@ public class DtoUser {
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastLogin;
+
+      // Relación Uno a Muchos con TVehicle
+    private List<DtoVehicle> vehicles;
 }
