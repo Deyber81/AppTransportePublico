@@ -9,16 +9,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DtoPenalty {
+public class DtoDriverLocation {
 
-    private String idPenalty;
+    private String idLocation;
 
-    private DtoTrip trip;
+    private DtoUser user;
 
-    private String penaltyReason;
+    private double latitude;
 
-    private double penaltyAmount;
+    private double longitude;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date penaltyDate;
+    private Date timestamp;
 }

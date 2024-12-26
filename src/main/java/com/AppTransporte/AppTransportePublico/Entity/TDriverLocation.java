@@ -5,23 +5,21 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
-@Table(name = "TStop")
+@Table(name = "TDriverLocation")
 @Getter
 @Setter
-public class TStop implements Serializable {
+public class TDriverLocation implements Serializable {
 
     @Id
-    @Column(name = "IdStop", nullable = false)
-    private String idStop;
+    @Column(name = "IdLocation", nullable = false)
+    private String idLocation;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "IdRoute", nullable = false)
-    private TRoute route;
-
-    @Column(name = "StopName", nullable = false)
-    private String stopName;
+    @JoinColumn(name = "IdUser", nullable = false)
+    private TUser user;
 
     @Column(name = "Latitude", nullable = false)
     private double latitude;
@@ -29,6 +27,7 @@ public class TStop implements Serializable {
     @Column(name = "Longitude", nullable = false)
     private double longitude;
 
-    @Column(name = "StopTime", nullable = false)
-    private String stopTime;
+    @Column(name = "Timestamp", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timestamp;
 }

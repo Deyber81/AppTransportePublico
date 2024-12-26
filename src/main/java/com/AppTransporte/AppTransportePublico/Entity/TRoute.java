@@ -1,10 +1,11 @@
 package com.AppTransporte.AppTransportePublico.Entity;
 
-import java.io.Serializable;
-import java.util.List;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "TRoute")
@@ -34,7 +35,6 @@ public class TRoute implements Serializable {
     @Column(name = "EndLongitude", nullable = false)
     private double endLongitude;
 
-    // Relación Uno a Muchos con TStop
     @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TStop> stops;
 }

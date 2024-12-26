@@ -1,19 +1,12 @@
 package com.AppTransporte.AppTransportePublico.Entity;
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "TUser")
@@ -22,8 +15,8 @@ import lombok.Setter;
 public class TUser implements Serializable {
 
     @Id
-    @Column(name = "IdUser", nullable = false) 
-    private String idUser; 
+    @Column(name = "IdUser", nullable = false)
+    private String idUser;
 
     @Column(name = "NameUser", nullable = false)
     private String nameUser;
@@ -41,20 +34,20 @@ public class TUser implements Serializable {
     private String typeUser;
 
     @Column(name = "DateCreate", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)  // Especificando tipo de dato temporal para Date
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreate;
 
     @Column(name = "StateUser", nullable = false)
-    private String stateUser = "Inactivo";
-    
+    private String stateUser;
+
     @Column(name = "PhoneUser", nullable = false)
     private String phoneUser;
 
     @Column(name = "LastLogin")
-    @Temporal(TemporalType.TIMESTAMP)  // Especificando tipo de dato temporal para Date
+    @Temporal(TemporalType.TIMESTAMP)
     private Date lastLogin;
 
-       // Relación Uno a Muchos con TVehicle
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TVehicle> vehicles;
+
 }

@@ -8,9 +8,14 @@ import lombok.Setter;
 public class DtoStop {
 
     private String idStop;
-    private String idRoute;
+
+    private DtoRoute route;
+
     private String stopName;
+
     private double latitude;
+
     private double longitude;
+
     private String stopTime;
 }

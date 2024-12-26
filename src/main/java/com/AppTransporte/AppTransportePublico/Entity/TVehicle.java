@@ -1,9 +1,11 @@
 package com.AppTransporte.AppTransportePublico.Entity;
 
-import java.io.Serializable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "TVehicle")
@@ -15,9 +17,9 @@ public class TVehicle implements Serializable {
     @Column(name = "IdVehicle", nullable = false)
     private String idVehicle;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IdUser", nullable = false)
-    private TUser user; // Relación con TUser
+    private TUser user;
 
     @Column(name = "LicensePlate", nullable = false, unique = true)
     private String licensePlate;
@@ -27,4 +29,8 @@ public class TVehicle implements Serializable {
 
     @Column(name = "Capacity", nullable = false)
     private int capacity;
+
+    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TVehicleSchedule> schedules;
+
 }

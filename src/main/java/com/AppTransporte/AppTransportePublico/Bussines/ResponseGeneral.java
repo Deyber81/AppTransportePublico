@@ -13,7 +13,7 @@ public class ResponseGeneral {
     private List<String> listMessage;
 
     public ResponseGeneral() {
-        this.type = "error"; // Por defecto, la respuesta es de tipo 'error'
+        this.type = "error"; 
         this.listMessage = new ArrayList<>();
     }
 
