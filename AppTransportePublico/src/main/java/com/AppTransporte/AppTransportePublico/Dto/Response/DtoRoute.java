@@ -2,7 +2,6 @@ package com.AppTransporte.AppTransportePublico.Dto.Response;
 
 import lombok.Getter;
 import lombok.Setter;
-
 @Getter
 @Setter
 public class DtoRoute {

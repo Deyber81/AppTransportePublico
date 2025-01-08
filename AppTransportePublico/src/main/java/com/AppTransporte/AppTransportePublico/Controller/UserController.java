@@ -55,21 +55,38 @@ public class UserController {
         }
     }
     @GetMapping("/GetAllUsers")
-    public ResponseEntity<?> listAllUsers() {
+    public ResponseEntity<ResponseGeneral> listAllUsers() {
         try {
             List<DtoUser> users = userService.listAllUsers();
-    
+
+            ResponseGeneral response = new ResponseGeneral();
+
+            // Si la lista está vacía, devolver un mensaje indicando esto
             if (users.isEmpty()) {
-                return new ResponseEntity<>("La lista de usuarios está vacía.", HttpStatus.NO_CONTENT);
+                response.setMessage("La lista de usuarios está vacía.");
+                response.setData(null);
+                response.setStatusCode(HttpStatus.OK);
+                return ResponseEntity.ok(response);
             }
-    
-            return new ResponseEntity<>(users, HttpStatus.OK);
-    
+
+            // Si hay datos, devolverlos con un mensaje de éxito
+            response.setMessage("Lista de usuarios obtenida exitosamente.");
+            response.setData(users);
+            response.setStatusCode(HttpStatus.OK);
+            return ResponseEntity.ok(response);
+
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>("Error al listar los usuarios. Por favor, intente nuevamente.", HttpStatus.INTERNAL_SERVER_ERROR);
+
+            // Manejo de error interno
+            ResponseGeneral response = new ResponseGeneral();
+            response.setMessage("Error al listar los usuarios. Por favor, intente nuevamente.");
+            response.setErrors(List.of(e.getMessage()));
+            response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+
     @DeleteMapping("/DeleteUser/{id}")
     public ResponseEntity<ResponseGeneral> deleteUser(@PathVariable String id) {
     ResponseGeneral response = userService.deleteUserById(id);

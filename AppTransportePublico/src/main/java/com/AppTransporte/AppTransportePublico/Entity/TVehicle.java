@@ -9,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "TVehicle")
+
 @Getter
 @Setter
 public class TVehicle implements Serializable {

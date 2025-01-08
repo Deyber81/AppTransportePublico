@@ -17,7 +17,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -58,12 +57,11 @@ public class UserService {
 
     public List<DtoUser> listAllUsers() {
         List<TUser> users = repoUser.findAll();
+    
+        // Convertir las entidades a DTOs
         return users.stream()
-            .map(user -> {
-                DtoUser dto = genericConverter.toDTOFromEntity(user);
-                return dto;
-            })
-            .collect(Collectors.toList());
+                .map(genericConverter::toDTOFromEntity)
+                .toList();
     }
     public ResponseGeneral deleteUserById(String idUser) {
         ResponseGeneral response = new ResponseGeneral();

@@ -13,8 +13,8 @@ public class RequestUser {
     
     private String idUser;
 
-    @NotBlank(message = "El campo 'NameUser' es requerido.")
-    @Size(max = 100, message = "El campo 'NameUser' no debe exceder los 100 caracteres.")
+    @NotBlank(message = "El campo Nombre es requerido.")
+    @Size(max = 100, message = "El campo Nombre no debe exceder los 100 caracteres.")
     private String nameUser;
 
     @NotBlank(message = "El campo 'SurnameUser' es requerido.")

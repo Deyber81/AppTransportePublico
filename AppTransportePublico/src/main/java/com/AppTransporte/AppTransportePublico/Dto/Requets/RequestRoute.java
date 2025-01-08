@@ -3,8 +3,6 @@ import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 public class RequestRoute {
@@ -27,8 +25,4 @@ public class RequestRoute {
 
     @NotNull(message = "La 'EndLongitude' es requerida.")
     private Double endLongitude;
-
-    // Relación uno a muchos con las paradas
-    @NotNull(message = "La lista de paradas es requerida.")
-    private List<RequestStop> stops;  // Relación de paradas asociadas a esta ruta
 }

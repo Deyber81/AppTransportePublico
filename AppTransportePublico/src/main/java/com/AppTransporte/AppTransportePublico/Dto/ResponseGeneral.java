@@ -1,12 +1,14 @@
 package com.AppTransporte.AppTransportePublico.Dto;
 
 import org.springframework.http.HttpStatus;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class ResponseGeneral {
 
     private String message;
-    private List<String> errors;
+    private List<String> errors = new ArrayList<>(); 
     private HttpStatus statusCode;
     private Object data; 
     public void success(String message) {
