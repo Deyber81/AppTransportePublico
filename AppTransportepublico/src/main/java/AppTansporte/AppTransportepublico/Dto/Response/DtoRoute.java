@@ -1,6 +1,6 @@
 package AppTansporte.AppTransportepublico.Dto.Response;
-import java.time.LocalTime;
 
+import java.time.LocalTime;
 import lombok.Data;
 
 @Data
@@ -17,10 +17,16 @@ public class DtoRoute {
     private Double startLongitude;
 
     private Double endLatitude;
-    
+
     private Double endLongitude;
 
     private LocalTime operationalStartTime;
 
     private LocalTime operationalEndTime;
+
+    private Double delayPenaltyAmount;
+
+    private Integer breakInterval;
+
+    private Integer routeDuration;
 }

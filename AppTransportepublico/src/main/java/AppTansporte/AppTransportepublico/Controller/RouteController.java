@@ -76,13 +76,13 @@ public class RouteController {
             ResponseGeneral response = new ResponseGeneral();
 
             if (routes.isEmpty()) {
-                response.setMessage("La lista de rutas está vacía.");
+                response.success("La lista de rutas está vacía.");
                 response.setData(null);
                 response.setStatusCode(HttpStatus.OK);
                 return ResponseEntity.ok(response);
             }
 
-            response.setMessage("Lista de rutas obtenida exitosamente.");
+            response.success("Lista de rutas obtenida exitosamente.");
             response.setData(routes);
             response.setStatusCode(HttpStatus.OK);
             return ResponseEntity.ok(response);
@@ -91,7 +91,7 @@ public class RouteController {
             e.printStackTrace();
 
             ResponseGeneral response = new ResponseGeneral();
-            response.setMessage("Error al listar las rutas. Por favor, intente nuevamente.");
+            response.error("Error al listar las rutas. Por favor, intente nuevamente.");
             response.setErrors(List.of(e.getMessage()));
             response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
