@@ -26,7 +26,6 @@ public class RouteService {
 
     @Autowired
     private GenericMapper genericMapper;
-
     
     // Insertar nueva ruta
     public ResponseGeneral insertRoute(DtoRoute dtoRoute) {
@@ -35,7 +34,7 @@ public class RouteService {
 
         // Validar unicidad del nombre de la ruta
         routeBusiness.validateRouteNameUniqueness(dtoRoute.getName(), null, errorMessages);
-
+        routeBusiness.validateRouteTimes(dtoRoute, errorMessages);
         if (!errorMessages.isEmpty()) {
             response.error(errorMessages);
             return response;
@@ -58,7 +57,7 @@ public class RouteService {
 
         // Validar existencia de la ruta
         routeBusiness.validateRouteExistence(dtoRoute.getIdRoute(), errorMessages);
-
+        routeBusiness.validateRouteTimes(dtoRoute, errorMessages);
         // Si el nombre ha cambiado, validar su unicidad
         if (dtoRoute.getName() != null) {
             routeBusiness.validateRouteNameUniqueness(dtoRoute.getName(), dtoRoute.getIdRoute(), errorMessages);

@@ -47,5 +47,15 @@ public class RouteBusiness {
         if (dtoRoute.getBreakInterval() != null) route.setBreakInterval(dtoRoute.getBreakInterval());
         if (dtoRoute.getRouteDuration() != null) route.setRouteDuration(dtoRoute.getRouteDuration());
     }
+    
+    public void validateRouteTimes(DtoRoute dtoRoute, List<String> errorMessages) {
+        if (dtoRoute.getOperationalStartTime() != null && dtoRoute.getOperationalEndTime() != null) {
+            if (dtoRoute.getOperationalEndTime().isBefore(dtoRoute.getOperationalStartTime())) {
+                errorMessages.add("La hora de finalización no puede ser menor que la hora de inicio.");
+            }
+        } else {
+            errorMessages.add("Las horas de inicio y fin son obligatorias.");
+        }
+    }
 }
 

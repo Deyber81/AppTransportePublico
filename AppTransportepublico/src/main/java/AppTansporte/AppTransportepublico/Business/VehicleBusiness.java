@@ -23,7 +23,7 @@ public class VehicleBusiness {
 
     public void validateUserExistence(String idUser, List<String> errorMessages) {
         if (!repoUser.existsById(idUser)) {
-            errorMessages.add("El usuario con el ID '" + idUser + "' no existe.");
+            errorMessages.add("El usuario con el ID no existe.");
         }
     }
 
