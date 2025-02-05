@@ -57,7 +57,6 @@ public class UserService {
     
             repoUser.save(user);
             response.success("Usuario guardado exitosamente.");
-            response.setData(dtoUser);
             return response;
     
         } catch (Exception e) {

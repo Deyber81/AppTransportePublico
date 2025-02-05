@@ -46,7 +46,7 @@ public class CreateRouteRequest {
     private Double delayPenaltyAmount;
 
     @NotNull(message = "El intervalo de descanso es obligatorio.")
-    @Min(value = 0, message = "El intervalo de descanso mínimo es 0.")
+    @Min(value = 1, message = "El intervalo de descanso mínimo es 1.")
     private Integer breakInterval;
 
     @NotNull(message = "La duración de la ruta es obligatoria.")

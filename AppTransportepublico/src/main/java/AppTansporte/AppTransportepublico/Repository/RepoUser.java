@@ -12,4 +12,6 @@ public interface RepoUser extends JpaRepository<TUser, String> {
      Optional<TUser> findByPhoneUser(String phoneUser);
      //Buscar ID del Usuario 
      Optional<TUser> findByIdUser(String idUser);
+     // Buscar usuario por correo y contraseña
+     Optional<TUser> findByGmailUserAndPasswordUser(String gmailUser, String passwordUser);
 }

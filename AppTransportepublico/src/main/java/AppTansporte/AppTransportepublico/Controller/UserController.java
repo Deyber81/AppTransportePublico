@@ -1,16 +1,17 @@
 package AppTansporte.AppTransportepublico.Controller;
 
 import jakarta.validation.Valid;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-
 import AppTansporte.AppTransportepublico.Business.GenericMapper;
 import AppTansporte.AppTransportepublico.Dto.ResponseGeneral;
 import AppTansporte.AppTransportepublico.Dto.Request.RequestUsers.CreateUserRequest;
@@ -28,31 +29,30 @@ public class UserController {
     @Autowired
     private GenericMapper genericMapper;
 
+    // Solo administradores pueden insertar usuarios
+    @PreAuthorize("hasAuthority('Admin')")
     @PostMapping(path = "/InsertUser", consumes = { "multipart/form-data" })
     public ResponseEntity<ResponseGeneral> insertUser(
-            @Valid @ModelAttribute CreateUserRequest requestUser, 
+            @Valid @ModelAttribute CreateUserRequest requestUser,
             BindingResult bindingResult) {
         
         ResponseGeneral response = new ResponseGeneral();
-    
-        // Validar el Request Object
-        if (bindingResult.hasErrors()) {
-            List<String> errorMessages = new ArrayList<>();
-            bindingResult.getAllErrors().forEach(error -> errorMessages.add(error.getDefaultMessage()));
-            response.error(errorMessages);
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-        }
+     if (bindingResult.hasErrors()) {
+        List<String> errorMessages = bindingResult.getAllErrors()
+            .stream()
+            .map(ObjectError::getDefaultMessage)
+            .collect(Collectors.toList());
+        response.error(errorMessages);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
     
         try {
-            // Mapear RequestUser a DtoUser
             DtoUser dtoUser = genericMapper.map(requestUser, DtoUser.class);
-            // Enviar el DTO al servicio
             ResponseGeneral serviceResponse = userService.insertUser(dtoUser);
-            // Si el servicio retorna errores, responde con BAD_REQUEST
+
             if (serviceResponse.getErrors() != null && !serviceResponse.getErrors().isEmpty()) {
                 return new ResponseEntity<>(serviceResponse, HttpStatus.BAD_REQUEST);
             }
-            // Respuesta exitosa
             return new ResponseEntity<>(serviceResponse, HttpStatus.CREATED);
     
         } catch (Exception e) {
@@ -61,6 +61,9 @@ public class UserController {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    // Solo administradores pueden listar todos los usuarios
+    @PreAuthorize("hasAuthority('Admin')")
     @GetMapping("/GetAllUsers")
     public ResponseEntity<?> listAllUsers() {
         try {
@@ -82,8 +85,6 @@ public class UserController {
 
         } catch (Exception e) {
             e.printStackTrace();
-
-            // Manejo de error interno
             ResponseGeneral response = new ResponseGeneral();
             response.setMessage("Error al listar los usuarios. Por favor, intente nuevamente.");
             response.setErrors(List.of(e.getMessage()));
@@ -92,6 +93,8 @@ public class UserController {
         }
     }
 
+    // Solo administradores pueden eliminar usuarios
+    @PreAuthorize("hasAuthority('Admin')")
     @DeleteMapping("/DeleteUser/{id}")
     public ResponseEntity<ResponseGeneral> deleteUser(@PathVariable String id) {
         ResponseGeneral response = userService.deleteUserById(id);
@@ -103,6 +106,8 @@ public class UserController {
         }
     }
 
+    // Solo administradores pueden actualizar usuarios
+    @PreAuthorize("hasAuthority('Admin')")
     @PostMapping(path = "/UpdateUser/{id}", consumes = { "multipart/form-data" })
     public ResponseEntity<ResponseGeneral> updateUser(
             @PathVariable("id") String idUser, 
@@ -111,7 +116,6 @@ public class UserController {
         
         ResponseGeneral response = new ResponseGeneral();
 
-        // Validar si hay errores en los datos enviados
         if (bindingResult.hasErrors()) {
             List<String> errorMessages = new ArrayList<>();
             bindingResult.getAllErrors().forEach(error -> errorMessages.add(error.getDefaultMessage()));
@@ -120,13 +124,8 @@ public class UserController {
         }
 
         try {
-            // Mapear Request a DTO
             DtoUser dtoUser = genericMapper.map(request, DtoUser.class);
-
-            // Asignar el ID desde la ruta
             dtoUser.setIdUser(idUser);
-
-            // Llamar al servicio para actualizar
             ResponseGeneral serviceResponse = userService.updateUser(dtoUser);
 
             return new ResponseEntity<>(serviceResponse, serviceResponse.getStatusCode());
@@ -138,6 +137,8 @@ public class UserController {
         }
     }
 
+    // Solo administradores pueden buscar usuarios por ID
+    @PreAuthorize("hasAuthority('Admin')")
     @GetMapping("/SearchUserId/{id}")
     public ResponseEntity<ResponseGeneral> getUserById(@PathVariable("id") String idUser) {
         ResponseGeneral response = userService.getUserById(idUser);

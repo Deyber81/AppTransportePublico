@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 @Data
 public class CreateStopRequest {
-     @NotNull(message = "El ID de la ruta es obligatorio.")
+    @NotNull(message = "El ID de la ruta es obligatorio.")
     @Size(min = 0, max = 36, message = "El ID de la ruta debe tener entre 0 y 36 caracteres")
     private String idRoute;
 
